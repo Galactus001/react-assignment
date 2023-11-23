@@ -11,8 +11,26 @@ function CompanyInfo({
 }: any) {
   const { activeStep, setActiveStep } = React.useContext(StepperContext);
 
+  const validateUEN = () => {
+    const regex = /^[0-9]{8}[a-zA-Z]$/;
+    if (!regex.test(formData.uen)) {
+      handleChange('error', {
+        ...formData.error,
+        uen: { message: 'Invalid UEN' },
+      });
+    } else {
+      handleChange('error', {
+        ...formData.error,
+        uen: undefined,
+      });
+    }
+  };
   useEffect(() => {
-    if (formData.uen && formData.companyName) {
+    validateUEN();
+  }, [formData.uen]);
+
+  useEffect(() => {
+    if (formData.uen && formData.companyName && !formData.error?.uen) {
       if (activeStep > 1) return;
       setActiveStep(1);
       setIsCompanyFilled(true);
@@ -20,7 +38,7 @@ function CompanyInfo({
       setActiveStep(0);
       setIsCompanyFilled(false);
     }
-  }, [formData.uen, formData.companyName]);
+  }, [formData.uen, formData.companyName, formData.error]);
 
   return (
     <Box
@@ -39,6 +57,8 @@ function CompanyInfo({
         onChange={(e) => {
           handleChange('uen', e.target.value);
         }}
+        errorState={formData.error?.uen}
+        error={{ message: formData.error?.uen?.message }}
       />
       <InputField
         label='Company Name'

@@ -1,10 +1,14 @@
 import { MuiTelInput } from 'mui-tel-input';
 import React, { useState } from 'react';
+import StepperContext from '../context/stepper-context';
 
-function PhoneInput({ value, onChange }: any) {
-  // const [value, setValue] = useState<string>('');
+function PhoneInput({ value, onChange, error, errorState }: any) {
+  const { activeStep } = React.useContext(StepperContext);
+  console.log(value);
   return (
     <MuiTelInput
+      error={Boolean(errorState) && activeStep === 1 && value !== ''}
+      helperText={value !== '' ? error?.message : ''}
       value={value}
       onChange={onChange}
       focusOnSelectCountry

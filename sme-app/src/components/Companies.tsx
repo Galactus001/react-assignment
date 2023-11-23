@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getData } from './services';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Box } from '@mui/material';
+import Header from './Header';
 
 const cols: GridColDef[] = [
   {
@@ -53,17 +54,11 @@ function Companies() {
   }, []);
   return (
     <div>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          py: '30px',
-          fontSize: '40px',
-        }}
-      >
-        All companies
-      </Box>
+      <div className='header-bg xs:h-[10vh] h-[21vh] w-full py-[20px] px-[140px] flex justify-center items-center header-bg'>
+        <div className='xs:text-[10px] text-[28px] text-white'>
+          All Companies
+        </div>
+      </div>
       <DataGrid
         // autoHeight
         // density='compact'
@@ -76,6 +71,7 @@ function Companies() {
           '& .MuiDataGrid-cell': {
             border: '0.5px solid #f3f3f3',
           },
+          maxHeight: '500px',
         }}
       />
     </div>

@@ -13,6 +13,24 @@ function ApplicantInfo({
 }: any) {
   const { activeStep, setActiveStep } = React.useContext(StepperContext);
 
+  const validatePhone = () => {
+    const regex = /^\+65\s\d{4}\s?\d{3}\s?\d{1}$/;
+    if (!regex.test(formData.phone)) {
+      handleChange('error', {
+        ...formData.error,
+        phone: { message: 'Invalid Phone' },
+      });
+    } else {
+      handleChange('error', {
+        ...formData.error,
+        phone: undefined,
+      });
+    }
+  };
+  useEffect(() => {
+    validatePhone();
+  }, [formData.phone]);
+
   useEffect(() => {
     if (activeStep === 0) {
       return;
@@ -23,7 +41,8 @@ function ApplicantInfo({
       formData.position &&
       formData.email &&
       formData.confirmEmail &&
-      formData.phone
+      formData.phone &&
+      !formData.error?.phone
     ) {
       if (activeStep > 2) return;
       setActiveStep(2);
@@ -39,6 +58,7 @@ function ApplicantInfo({
     formData.confirmEmail,
     formData.phone,
     isCompanyFilled,
+    formData.error,
   ]);
 
   return (
@@ -106,7 +126,10 @@ function ApplicantInfo({
       >
         <PhoneInput
           value={formData.phone}
+          errorState={formData.error?.phone}
+          error={{ message: formData.error?.phone?.message }}
           onChange={(newVal) => {
+            console.log(newVal);
             handleChange('phone', newVal);
           }}
         />
