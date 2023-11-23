@@ -39,6 +39,7 @@ const FormSection = () => {
     confirmEmail: '',
     phone: '',
     tncAgreed: false,
+    error: {},
   });
 
   const [isCompanyFilled, setIsCompanyFilled] = React.useState<boolean>(false);

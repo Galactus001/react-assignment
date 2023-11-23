@@ -1,4 +1,4 @@
-import { FormHelperText, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
 function InputField(props: any) {
   const {
@@ -37,22 +37,8 @@ function InputField(props: any) {
             height: '30px',
           },
         }}
+        helperText={error?.message || ''}
       />
-      {error?.message && (
-        <FormHelperText
-          style={{
-            color: '#CF4C4C',
-            fontFamily: 'Open Sans',
-            fontSize: '10px',
-            lineHeight: '12px',
-            fontWeight: 500,
-            fontStyle: 'normal',
-          }}
-          error
-        >
-          {error?.message}
-        </FormHelperText>
-      )}
     </>
   );
 }
